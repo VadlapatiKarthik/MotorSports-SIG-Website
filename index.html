@@ -120,17 +120,30 @@
       overflow: hidden;
       margin: 1rem 0;
     }
-    .car-animation .car {
+    .car-animation img.car {
       position: absolute;
-      left: -60px;
+      left: -120px;
       top: 0;
-      font-size: 3rem;
+      height: 60px;
+      width: auto;
       animation: drive 3s forwards;
       z-index: 2;
+    }
+    .car-animation img.car::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(rgba(255,255,255,0.6), rgba(255,255,255,0));
+      transform: translate(-50%, -50%);
+      filter: blur(4px);
     }
     .car-animation .text-mask {
       overflow: hidden;
       display: inline-block;
+      margin-left: 20px;
     }
     .car-animation .text-mask h1 {
       transform: translateX(-100%);
@@ -186,64 +199,42 @@
     }
 
     /* ----------------------------------------
-       Dialog (Event Ideas Submission)
+       Idea Submission Form
     ---------------------------------------- */
-    dialog {
-      border: none;
+    #idea-submission {
+      background: rgba(255, 215, 0, 0.1);
       border-radius: 8px;
-      padding: 1.5rem;
-      width: 90%;
-      max-width: 400px;
-      background: #222;
-      color: #f0f0f0;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+      padding: 2rem;
+      max-width: 600px;
+      margin: 2rem auto;
+      text-align: center;
     }
-    dialog::backdrop {
-      background: rgba(0, 0, 0, 0.6);
-    }
-    dialog form {
+    #ideaForm {
       display: flex;
       flex-direction: column;
+      gap: 0.8rem;
     }
-    dialog label {
-      margin-top: 0.8rem;
-      font-size: 0.9rem;
-      color: #ddd;
-    }
-    dialog input[type="text"],
-    dialog input[type="email"],
-    dialog textarea {
-      margin-top: 0.4rem;
+    #ideaForm input,
+    #ideaForm textarea {
       padding: 0.5rem;
       border: 1px solid #444;
       border-radius: 4px;
       background: #111;
       color: #f0f0f0;
     }
-    dialog textarea {
-      resize: vertical;
-      min-height: 80px;
-    }
-    .dialog-buttons {
-      margin-top: 1rem;
-      display: flex;
-      justify-content: flex-end;
-      gap: 0.5rem;
-    }
-    .dialog-buttons button {
+    #ideaForm button {
       padding: 0.5rem 1rem;
       border: none;
       border-radius: 4px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-    .btn-submit {
       background: goldenrod;
       color: black;
+      font-weight: bold;
+      cursor: pointer;
     }
-    .btn-close {
-      background: #555;
-      color: #f0f0f0;
+    #thankYou {
+      margin-top: 1rem;
+      color: goldenrod;
+      font-weight: bold;
     }
   </style>
 </head>
@@ -269,7 +260,7 @@
   ======================================== -->
   <section id="home">
     <div class="car-animation">
-      <span class="car">🚗</span>
+      <img src="car.png" alt="Racing Car" class="car" />
       <div class="text-mask">
         <h1>Welcome to Motorsports SIG</h1>
       </div>
@@ -341,70 +332,68 @@
   </section>
 
   <!-- ========================================
-       Submission Section (Dialog Trigger)
+       Submit Your Idea
   ======================================== -->
-  <section id="submit">
-    <h2>Have an Idea?</h2>
-    <p>Scroll down to the very bottom to submit your event ideas.</p>
-    <div class="placeholder">
-      [Scroll further to submit your “Event Ideas.”]
-    </div>
+  <section id="idea-submission">
+    <h2>Submit Your Event Idea</h2>
+    <form id="ideaForm">
+      <input type="text" id="name" name="name" placeholder="Your Name" required />
+      <input type="email" id="email" name="email" placeholder="Your Email" required />
+      <textarea id="idea" name="idea" placeholder="Describe your idea…" required></textarea>
+      <button type="submit">Submit</button>
+    </form>
+    <p id="thankYou" style="display:none;">Thank you for your idea!</p>
   </section>
 
   <!-- ========================================
-       Hidden Dialog for “Event Ideas”
-  ======================================== -->
-  <dialog id="ideaDialog">
-    <h3>Submit Your Event Idea</h3>
-    <form id="ideaForm">
-      <label for="name">Your Name</label>
-      <input type="text" id="name" name="name" required />
-
-      <label for="email">Your Email</label>
-      <input type="email" id="email" name="email" required />
-
-      <label for="idea">Event Idea</label>
-      <textarea id="idea" name="idea" placeholder="Describe your idea…" required></textarea>
-
-      <div class="dialog-buttons">
-        <button type="button" class="btn-close">Cancel</button>
-        <button type="submit" class="btn-submit">Submit</button>
-      </div>
-    </form>
-  </dialog>
-
-  <!-- ========================================
-       JavaScript for Dialog & Scroll Detection
+       JavaScript
   ======================================== -->
   <script>
     document.addEventListener('DOMContentLoaded', function () {
-      const dialog = document.getElementById('ideaDialog');
-      const closeBtn = dialog.querySelector('.btn-close');
-      const form = document.getElementById('ideaForm');
-      let hasOpened = false;
+      // Random background image
+      const backgrounds = [
+        'https://images.unsplash.com/photo-1502877338535-766e1452684a?auto=format&fit=crop&w=1350&q=80',
+        'https://images.unsplash.com/photo-1470084270911-5f3a930d5301?auto=format&fit=crop&w=1350&q=80',
+        'https://images.unsplash.com/photo-1592194996307-4ea0dad270d5?auto=format&fit=crop&w=1350&q=80'
+      ];
+      const bg = backgrounds[Math.floor(Math.random() * backgrounds.length)];
+      document.body.style.backgroundImage = `linear-gradient(135deg, #000000, #111111), url(${bg})`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundPosition = 'center';
+      document.body.style.backgroundAttachment = 'fixed';
+      document.body.style.backgroundBlendMode = 'overlay';
 
-      // Close button handler
-      closeBtn.addEventListener('click', () => {
-        dialog.close();
+      // Car animation replay
+      function playCarAnimation() {
+        const car = document.querySelector('.car-animation img.car');
+        const text = document.querySelector('.car-animation .text-mask h1');
+        car.style.animation = 'none';
+        text.style.animation = 'none';
+        void car.offsetWidth; // trigger reflow
+        car.style.animation = 'drive 3s forwards';
+        text.style.animation = 'reveal 3s forwards';
+      }
+      playCarAnimation();
+      document.querySelectorAll('a[href="#home"]').forEach(el => {
+        el.addEventListener('click', playCarAnimation);
       });
 
-      // Form submission handler (you can replace with real submission logic)
+      // Form submission handling
+      const form = document.getElementById('ideaForm');
+      const thankYou = document.getElementById('thankYou');
       form.addEventListener('submit', (e) => {
         e.preventDefault();
-        // Here you could send data via fetch/AJAX to your backend.
-        alert('Thank you, ' + form.name.value + '! Your idea has been submitted.');
+        const ideas = JSON.parse(localStorage.getItem('eventIdeas') || '[]');
+        ideas.push({
+          name: form.name.value,
+          email: form.email.value,
+          idea: form.idea.value,
+          timestamp: new Date().toISOString()
+        });
+        localStorage.setItem('eventIdeas', JSON.stringify(ideas));
         form.reset();
-        dialog.close();
-      });
-
-      // Detect when user scrolls to the bottom
-      window.addEventListener('scroll', () => {
-        const scrollPosition = window.innerHeight + window.scrollY;
-        const bottomPosition = document.documentElement.scrollHeight - 2;
-        if (scrollPosition >= bottomPosition && !hasOpened) {
-          dialog.showModal();
-          hasOpened = true;
-        }
+        thankYou.style.display = 'block';
+        setTimeout(() => { thankYou.style.display = 'none'; }, 3000);
       });
     });
   </script>
