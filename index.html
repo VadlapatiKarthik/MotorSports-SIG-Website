@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Motorsports SIG</title>
   <style>
+    @import url("https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap");
     /* ----------------------------------------
        Basic Reset & Smooth Scroll
     ---------------------------------------- */
@@ -28,7 +29,7 @@
     ---------------------------------------- */
     nav {
       justify-content: center;
-      font-family: 'Oswald', 'Montserrat', 'Segoe UI', 'Arial', sans-serif;
+      font-family: 'Cinzel', 'Oswald', 'Montserrat', 'Segoe UI', 'Arial', sans-serif;
       letter-spacing: 0.04em;
       font-size: 1.1rem;
     }
@@ -45,7 +46,7 @@
       background: goldenrod;
       display: flex;
       align-items: center;
-      padding: 0.5rem 2rem;
+      padding: 1rem 2rem;
       z-index: 1000;
     }
     nav img.logo {
@@ -92,6 +93,7 @@
       color: goldenrod;
       margin-bottom: 1rem;
       text-align: center;
+      font-family: "Cinzel", serif;
     }
     section p {
       max-width: 800px;
@@ -111,6 +113,36 @@
     }
     #home h1 {
       font-size: 3rem;
+    }
+    .car-animation {
+      position: relative;
+      display: inline-block;
+      overflow: hidden;
+      margin: 1rem 0;
+    }
+    .car-animation .car {
+      position: absolute;
+      left: -60px;
+      top: 0;
+      font-size: 3rem;
+      animation: drive 3s forwards;
+      z-index: 2;
+    }
+    .car-animation .text-mask {
+      overflow: hidden;
+      display: inline-block;
+    }
+    .car-animation .text-mask h1 {
+      transform: translateX(-100%);
+      white-space: nowrap;
+      animation: reveal 3s forwards;
+      animation-delay: 0.3s;
+    }
+    @keyframes drive {
+      to { left: calc(100% + 60px); }
+    }
+    @keyframes reveal {
+      to { transform: translateX(0); }
     }
 
     /* ----------------------------------------
@@ -236,7 +268,12 @@
        Home Section
   ======================================== -->
   <section id="home">
-    <h1>Motorsports SIG</h1>
+    <div class="car-animation">
+      <span class="car">🚗</span>
+      <div class="text-mask">
+        <h1>Welcome to Motorsports SIG</h1>
+      </div>
+    </div>
     <p>Welcome to Motorsports Student Interest Group. We bring together all motorsports enthusiasts on campus to collaborate, build, and race.</p>
     <div class="placeholder">
       [Hero image / banner could go here]
