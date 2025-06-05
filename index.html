@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Motorsports SIG</title>
+  <style>
+    /* ----------------------------------------
+       Basic Reset & Smooth Scroll
+    ---------------------------------------- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #000000, #111111);
+      color: #f0f0f0;
+      line-height: 1.6;
+    }
+
+    /* ----------------------------------------
+       Navigation Bar
+    ---------------------------------------- */
+    nav {
+      justify-content: center;
+      font-family: 'Oswald', 'Montserrat', 'Segoe UI', 'Arial', sans-serif;
+      letter-spacing: 0.04em;
+      font-size: 1.1rem;
+    }
+    nav ul {
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background: goldenrod;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 2rem;
+      z-index: 1000;
+    }
+    nav img.logo {
+      height: 40px;
+      width: 40px;
+      object-fit: contain;
+      cursor: pointer;
+    }
+    nav ul {
+      list-style: none;
+      display: flex;
+      margin-left: 1rem;
+    }
+    nav li {
+      margin-left: 1.5rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+    nav a:hover {
+      color: #333;
+    }
+
+    /* ----------------------------------------
+       Section Styles
+    ---------------------------------------- */
+    section {
+      min-height: 100vh;
+      padding: 80px 2rem 2rem; /* top padding accounts for fixed nav */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(180deg, rgba(0,0,0,0.8) 0%, rgba(17,17,17,1) 100%);
+    }
+    section:nth-of-type(odd) {
+      background: linear-gradient(180deg, rgba(17,17,17,1) 0%, rgba(0,0,0,0.8) 100%);
+    }
+    section h1,
+    section h2 {
+      color: goldenrod;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    section p {
+      max-width: 800px;
+      margin: 0 auto 1.5rem;
+      color: #ddd;
+    }
+
+    /* ----------------------------------------
+       “Home” Section Specifics
+    ---------------------------------------- */
+    #home {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    #home h1 {
+      font-size: 3rem;
+    }
+
+    /* ----------------------------------------
+       Placeholder Boxes for Content
+    ---------------------------------------- */
+    .placeholder {
+      background: rgba(255, 215, 0, 0.1);
+      border: 2px dashed goldenrod;
+      padding: 2rem;
+      border-radius: 8px;
+      margin: 1rem auto;
+      max-width: 800px;
+      color: #aaa;
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* ----------------------------------------
+       Team Grid
+    ---------------------------------------- */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+    .team-member {
+      background: rgba(255, 215, 0, 0.1);
+      border-radius: 8px;
+      padding: 1rem;
+      text-align: center;
+    }
+    .team-member h3 {
+      margin-top: 1rem;
+      color: #f0f0f0;
+    }
+    .team-member p {
+      color: #ddd;
+      font-size: 0.9rem;
+    }
+
+    /* ----------------------------------------
+       Dialog (Event Ideas Submission)
+    ---------------------------------------- */
+    dialog {
+      border: none;
+      border-radius: 8px;
+      padding: 1.5rem;
+      width: 90%;
+      max-width: 400px;
+      background: #222;
+      color: #f0f0f0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.7);
+    }
+    dialog::backdrop {
+      background: rgba(0, 0, 0, 0.6);
+    }
+    dialog form {
+      display: flex;
+      flex-direction: column;
+    }
+    dialog label {
+      margin-top: 0.8rem;
+      font-size: 0.9rem;
+      color: #ddd;
+    }
+    dialog input[type="text"],
+    dialog input[type="email"],
+    dialog textarea {
+      margin-top: 0.4rem;
+      padding: 0.5rem;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background: #111;
+      color: #f0f0f0;
+    }
+    dialog textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+    .dialog-buttons {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 0.5rem;
+    }
+    .dialog-buttons button {
+      padding: 0.5rem 1rem;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn-submit {
+      background: goldenrod;
+      color: black;
+    }
+    .btn-close {
+      background: #555;
+      color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <!-- ========================================
+       Navigation Bar
+  ======================================== -->
+  <nav>
+    <!-- Placeholder Logo: replace "logo.png" with your actual file -->
+    <a href="#home">
+      <img src="logo.jpg" alt="Motorsports SIG Logo" class="logo" />
+    </a>
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#events">Events</a></li>
+      <li><a href="#team">Team</a></li>
+    </ul>
+  </nav>
+
+  <!-- ========================================
+       Home Section
+  ======================================== -->
+  <section id="home">
+    <h1>Motorsports SIG</h1>
+    <p>Welcome to Motorsports Student Interest Group. We bring together all motorsports enthusiasts on campus to collaborate, build, and race.</p>
+    <div class="placeholder">
+      [Hero image / banner could go here]
+    </div>
+  </section>
+
+  <!-- ========================================
+       About Us Section
+  ======================================== -->
+  <section id="about">
+    <h2>About Us</h2>
+    <p>
+      Motorsports SIG is dedicated to fostering hands-on learning in automotive engineering, team collaboration, and competitive racing. Our members design, build, and test custom vehicles in annual competitions. Whether you’re an aspiring engineer, driver, or simply passionate about cars, join us to turn your ideas into reality.
+    </p>
+    <div class="placeholder">
+      [Insert club history, mission, and achievements here]
+    </div>
+  </section>
+
+  <!-- ========================================
+       Events Section
+  ======================================== -->
+  <section id="events">
+    <h2>Events</h2>
+    <p>
+      We host workshops, build sessions, and track days throughout the year. Upcoming events:
+    </p>
+    <div class="placeholder">
+      [List upcoming events, dates, and brief descriptions]
+    </div>
+  </section>
+
+  <!-- ========================================
+       Team Section
+  ======================================== -->
+  <section id="team">
+    <h2>Team</h2>
+    <p>
+      Meet our core team members and lead engineers who keep Motorsports SIG running:
+    </p>
+    <div class="team-grid">
+      <!-- Example team member cards -->
+      <div class="team-member">
+        <img src="https://via.placeholder.com/150" alt="Member Photo" style="border-radius:50%;"/>
+        <h3>Alex Johnson</h3>
+        <p>President &amp; Lead Designer</p>
+      </div>
+      <div class="team-member">
+        <img src="https://via.placeholder.com/150" alt="Member Photo" style="border-radius:50%;"/>
+        <h3>Sophia Lee</h3>
+        <p>Project Manager &amp; Safety Lead</p>
+      </div>
+      <div class="team-member">
+        <img src="https://via.placeholder.com/150" alt="Member Photo" style="border-radius:50%;"/>
+        <h3>Ravi Patel</h3>
+        <p>Electrical Systems Engineer</p>
+      </div>
+      <div class="team-member">
+        <img src="https://via.placeholder.com/150" alt="Member Photo" style="border-radius:50%;"/>
+        <h3>Maria Gonzales</h3>
+        <p>Chassis &amp; Suspension Lead</p>
+      </div>
+      <!-- …add more members as needed… -->
+    </div>
+  </section>
+
+  <!-- ========================================
+       Submission Section (Dialog Trigger)
+  ======================================== -->
+  <section id="submit">
+    <h2>Have an Idea?</h2>
+    <p>Scroll down to the very bottom to submit your event ideas.</p>
+    <div class="placeholder">
+      [Scroll further to submit your “Event Ideas.”]
+    </div>
+  </section>
+
+  <!-- ========================================
+       Hidden Dialog for “Event Ideas”
+  ======================================== -->
+  <dialog id="ideaDialog">
+    <h3>Submit Your Event Idea</h3>
+    <form id="ideaForm">
+      <label for="name">Your Name</label>
+      <input type="text" id="name" name="name" required />
+
+      <label for="email">Your Email</label>
+      <input type="email" id="email" name="email" required />
+
+      <label for="idea">Event Idea</label>
+      <textarea id="idea" name="idea" placeholder="Describe your idea…" required></textarea>
+
+      <div class="dialog-buttons">
+        <button type="button" class="btn-close">Cancel</button>
+        <button type="submit" class="btn-submit">Submit</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- ========================================
+       JavaScript for Dialog & Scroll Detection
+  ======================================== -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const dialog = document.getElementById('ideaDialog');
+      const closeBtn = dialog.querySelector('.btn-close');
+      const form = document.getElementById('ideaForm');
+      let hasOpened = false;
+
+      // Close button handler
+      closeBtn.addEventListener('click', () => {
+        dialog.close();
+      });
+
+      // Form submission handler (you can replace with real submission logic)
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Here you could send data via fetch/AJAX to your backend.
+        alert('Thank you, ' + form.name.value + '! Your idea has been submitted.');
+        form.reset();
+        dialog.close();
+      });
+
+      // Detect when user scrolls to the bottom
+      window.addEventListener('scroll', () => {
+        const scrollPosition = window.innerHeight + window.scrollY;
+        const bottomPosition = document.documentElement.scrollHeight - 2;
+        if (scrollPosition >= bottomPosition && !hasOpened) {
+          dialog.showModal();
+          hasOpened = true;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
